@@ -8,8 +8,16 @@ openai_api_key = st.secrets["OPENAI_API_KEY"]
 
 
 def generate_response(input_text):
-    model = ChatOpenAI(temperature=0.7, api_key=openai_api_key)
-    st.info(model.invoke(input_text))
+    model = ChatOpenAI(
+        model="gpt-3.5-turbo",  # <-- ADD this line
+        temperature=0.7,
+        api_key=openai_api_key,
+    )
+    try:
+        response = model.invoke(input_text)
+        st.info(response)
+    except Exception as e:
+        st.error(f"Error: {str(e)}")
 
 
 with st.form("my_form"):
